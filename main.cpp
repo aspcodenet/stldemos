@@ -107,13 +107,28 @@ int main(){
     int biggest2 = findBiggest(a,b,c);
 
     std::vector<Movie> greatMovies{
-        Movie("The Mummy returns",2022,Movie::MovieType::MovieType_Film,109), // <- begin
+        Movie("The Mummy returns",2022,Movie::MovieType::MovieType_Film,40), // <- begin
         Movie("Fast and Furious 7",2014,Movie::MovieType::MovieType_Film,99),  // <-items
-        Movie("Star Trek: Voyager",2000,Movie::MovieType::MovieType_Tv,200),
+        Movie("Star Trek: Voyager",2000,Movie::MovieType::MovieType_Tv,50),
         Movie("Fast & Furious Presents: Hobbs & Shaw",2019,Movie::MovieType::MovieType_Film,88),
        Movie("Young Rock",2021,Movie::MovieType::MovieType_Tv,82),
                                                                             // -< end
     };
+
+    // result "promise" NOT EXECUTED
+    auto result = greatMovies | std::views::filter([](const Movie &m){
+        std::cout << "In filter" << std::endl;
+        return m.getPrice() > 80;
+    });
+
+    for(auto i :result){ // until we start iterating
+        std::cout << "In print" << std::endl;
+        std::cout << i.getName() << std::endl;
+    }
+
+
+
+
 
     int year;
     std::cin >> year;
