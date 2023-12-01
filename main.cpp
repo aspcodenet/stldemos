@@ -5,6 +5,16 @@
 #include <numeric>
 #include <ranges>
 
+
+struct ChristmasWish{
+    std::string Name;
+    int Price;
+    ChristmasWish(std::string name, int price){
+        Name = name;
+        Price = price;
+    }        
+};
+
 class Movie{
 public:
     typedef enum {
@@ -86,25 +96,44 @@ private:
 
 
 
+template<typename T>
+concept Integral = std::is_integral_v<T>;
+
+template<Integral T,int size>
+class MyArrayForNumbers{
+public:
+private:
+    T things[size]; //
+};
+
 
 int main(){
-    MyArray<int,15> array; // array stack allocated - 15 of those
-    //int i = array.getAt(1);
-    //int i = array[1];
-    MyArray<Movie,100> array2; // I would need 100 of those
-    MyArray<Movie,50> array21; // I would need 100 of those
-    MyArray<float,3> array3; // I would need 3
-    //List<T>
-    //std::vector<int> a = {1,2,3};
-    int a= 19;
-    int b = 20;
-    int c = 21;
-    int biggest = findBiggest(a,b,c);
-
-    std::string bname = findBiggest<std::string>("Stefan","Holmberg","Test");
+    int sdadsa = 12;
+    float pi = 3.1415;
+    //std::cout << "dsadas" << sdadsa << "432" << std::endl;
+    //std::cout << std::format("dsadas {} hjkh {.2f} 432",sdadsa,pi) << std::endl;
+    
+    // MyArrayForNumbers<std::string,10> arrayen;
+    // MyArrayForNumbers<int,10> arrayen2;
 
 
-    int biggest2 = findBiggest(a,b,c);
+    // MyArray<int,15> array; // array stack allocated - 15 of those
+    // //int i = array.getAt(1);
+    // //int i = array[1];
+    // MyArray<Movie,100> array2; // I would need 100 of those
+    // MyArray<Movie,50> array21; // I would need 100 of those
+    // MyArray<float,3> array3; // I would need 3
+    // //List<T>
+    // //std::vector<int> a = {1,2,3};
+    // int a= 19;
+    // int b = 20;
+    // int c = 21;
+    // int biggest = findBiggest(a,b,c);
+
+    // std::string bname = findBiggest<std::string>("Stefan","Holmberg","Test");
+
+
+    // int biggest2 = findBiggest(a,b,c);
 
     std::vector<Movie> greatMovies{
         Movie("The Mummy returns",2022,Movie::MovieType::MovieType_Film,40), // <- begin
@@ -114,6 +143,55 @@ int main(){
        Movie("Young Rock",2021,Movie::MovieType::MovieType_Tv,82),
                                                                             // -< end
     };
+
+
+
+    // std::ranges::sort(greatMovies,[](const Movie &item1,const Movie &item2){
+    //     return item1.getName() < item2.getName();
+    // });
+    // for(auto i : greatMovies){ 
+    //     std::cout << i.getName() << std::endl;
+    // }
+
+
+    auto result2 = greatMovies | std::views::filter([](const Movie &m){
+        //std::cout << "In filter" << std::endl;
+        return m.getPrice() > 80;
+    }) | std::views::transform([](const Movie &m){
+        //std::cout << "In filter" << std::endl;
+        return ChristmasWish(m.getName(), m.getPrice());
+    }) | std::views::take(2);
+
+
+    std::vector<ChristmasWish> rrrr(std::begin(result2),std::end(result2));
+
+
+    for(auto i :result2){ // until we start iterating
+        //std::cout << "In print" << std::endl;
+        std::cout << i.Name << std::endl;
+    }
+
+
+
+
+
+
+
+
+    // template <typename Iterator>
+    // constexpr void sort(const Iterator first,const Iterator last);
+    std::sort(begin(greatMovies), end(greatMovies),[](const Movie &item1,const Movie &item2){
+        return item1.getName() < item2.getName();
+    });
+    for(auto i : greatMovies){ 
+        std::cout << i.getName() << std::endl;
+    }
+
+
+
+
+
+
 
     // result "promise" NOT EXECUTED
     auto result = greatMovies | std::views::filter([](const Movie &m){
