@@ -58,15 +58,48 @@ int main(){
         Movie("Star Trek: Voyager",2000,Movie::MovieType::MovieType_Tv,50),
         Movie("Fast & Furious Presents: Hobbs & Shaw",2019,Movie::MovieType::MovieType_Film,88),
        Movie("Young Rock",2021,Movie::MovieType::MovieType_Tv,82),
-                                                                            // -< end
     };
 
-    // Loopa igenom alla
-    // vs for each
-    // vs auto : 
 
-    // count
+    //int j=12;
+
+    //  Loopa igenom alla - C/C++
+    // jag behöver i:et
+    // PLUS - vana
+    // MINUS - lätt att göra fel
+    // MINUS - "sämre semantik"  - while(true)
+    for(int i = 0; i < greatMovies.size(); i++){
+        Movie m = greatMovies[i];
+        std::cout << m.getName() << std::endl;
+    }
+    // vs for each BARA C++
+    // Alla algoritmer tar 
+    //         1. en start
+    //         2. en slut
+    //         3. en lambda - en funktion att applicera på alla element mellan start och slut
+    
+    // BÄTTRE SEMANTIK - for varje
+    // MÖJLIGT MED BÄTTRE PRESTANDA! - parallellism
+    // MÖJLIGT MED BÄTTRE PRESTANDA! - EXPERTER -> Assembler-kod
+
+    // openssl - hash uis743289jkwfe342dfkslö890
+    // färdig källkod cpp
+    // openssl.h  -> 20% snabbare   ASM
+    std::for_each( std::begin(greatMovies),std::end(greatMovies),[](const Movie &m){
+        std::cout << m.getName() << std::endl;
+    } );
+    // vs auto : 
+    // BÄTTRE SEMANTIK - for varje - möjligt att breaka
+    for(Movie m : greatMovies){
+        std::cout << m.getName() << std::endl;
+    }
+
+    // hur många filmer kostar mer än 70 kr
+    // count 
+    //  std::count( std::begin(greatMovies),std::end(greatMovies),3 )
     // any of
+    // std::any_of( std::begin(greatMovies),std::end(greatMovies),3 )
+    // sort
     // find_if
     // filter - ta fram alla som kostar minst X kr.. NÄSTA TORSDAG = ranges
 
