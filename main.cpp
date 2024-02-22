@@ -60,6 +60,29 @@ int main(){
        Movie("Young Rock",2021,Movie::MovieType::MovieType_Tv,82),
     };
 
+    // Det som skiljer sig i en sort är JÄMFÖRELSEN som säger om en swapp ska ske eller inte
+    
+    // sort pris
+    std::sort(std::begin(greatMovies),std::end(greatMovies),[](const Movie &m1, const Movie &m2){
+        return m1.getPrice() < m2.getPrice();
+    });      
+        std::cout << "PRIS" << std::endl;
+    for(Movie m : greatMovies){
+        std::cout << m.getName() << std::endl;
+    }
+
+    // sort year
+    std::sort(std::begin(greatMovies),std::end(greatMovies),[](const Movie &m1, const Movie &m2){
+        return m1.getYear() < m2.getYear();
+    });      
+        std::cout << "YEAR" << std::endl;
+    for(Movie m : greatMovies){
+        std::cout << m.getName() << std::endl;
+    }
+
+        std::cout << "KLART" << std::endl;
+
+
 
     //int j=12;
 
@@ -93,10 +116,43 @@ int main(){
     for(Movie m : greatMovies){
         std::cout << m.getName() << std::endl;
     }
+    int ant = 0;
 
     // hur många filmer kostar mer än 70 kr
-    // count 
-    //  std::count( std::begin(greatMovies),std::end(greatMovies),3 )
+    int antal = 0;
+    for(int i = 0; i < greatMovies.size(); i++){ // GENERISK LOOP
+        Movie m = greatMovies[i];
+        if(m.getPrice() > 70){  // 
+            antal++;   //
+        }
+    }
+    std::cout << antal << std::endl;
+
+    // Förtäckt forloop
+    int nyaAntal = std::count_if(std::begin(greatMovies),std::end(greatMovies), [](const Movie &m){
+        return m.getPrice() > 70;  // OM true Räknas den!
+    });
+
+
+    // count_if
+    //  std::count_iof( std::begin(greatMovies),std::end(greatMovies),3 )
+
+
+    // Finns det nån film som är gjord innan 2015  YES / NO
+    bool anyInnan2015 = std::any_of(std::begin(greatMovies),std::end(greatMovies), [](const Movie &m){
+        return m.getYear() < 2015;  // OM true Räknas den!
+    });
+
+    //int antalInnan2015 = std::count_if(std::begin(greatMovies),std::end(greatMovies), [](const Movie &m){
+    //     return m.getYear() < 2015;  // OM true Räknas den!
+    // });
+    // bool anyInnan2015 = false;
+    // // antalInnan2015  = 2
+    // if(antalInnan2015 > 0){
+    //     anyInnan2015 = true;
+    // }
+
+    
     // any of
     // std::any_of( std::begin(greatMovies),std::end(greatMovies),3 )
     // sort
