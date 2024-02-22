@@ -62,6 +62,13 @@ int main(){
     };
 
     // Loopa igenom alla
+    // vs for each
+    // vs auto : 
+
+    // count
+    // any of
+    // find_if
+    // filter - ta fram alla som kostar minst X kr.. NÄSTA TORSDAG = ranges
 
     // int total = 0;
     // for(int i = 0; i < greatMovies.size(); i++){
