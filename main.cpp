@@ -95,10 +95,45 @@ int summeraTalFromFor(int talet){
 // }
 
 
-    
-int main(){  
-    huvudMeny();
+void printAllMovies(std::vector<Movie> movies){
+    for(Movie &m : movies){
+        std::cout << m.getName() << std::endl;
+    }
+}
 
+void printAllMovies2(std::vector<Movie> movies){
+    for(Movie &m : movies){
+        std::cout << m.getName() << m.getPrice() <<  std::endl;
+    }
+}
+
+
+
+bool compare(const Movie &m1, const Movie &m2){
+        return m1.getPrice() < m2.getPrice();
+    }
+
+int main(){  
+    std::vector<Movie> greatMovies{
+        Movie("The Mummy returns",2022,Movie::MovieType::MovieType_Film,40), // <- begin
+        Movie("Fast and Furious 7",2014,Movie::MovieType::MovieType_Film,99),  // <-items
+        Movie("Star Trek: Voyager",2000,Movie::MovieType::MovieType_Tv,50),
+        Movie("Fast & Furious Presents: Hobbs & Shaw",2019,Movie::MovieType::MovieType_Film,88),
+       Movie("Young Rock",2021,Movie::MovieType::MovieType_Tv,82),
+    };
+
+
+    std::sort(std::begin(greatMovies),std::end(greatMovies),compare);
+
+
+    std::sort(std::begin(greatMovies),std::end(greatMovies),[](const Movie &m1, const Movie &m2){
+        return m1.getPrice() < m2.getPrice();
+    });
+
+    printAllMovies(greatMovies);
+    printAllMovies2(greatMovies);
+
+    
     // 1 rekursion exempel - Fibonachi
     // Summera alla tal från START ned till 0
     int svar = summeraTalFrom(4);   // 4 + 3 + 2 + 1 + 0
@@ -119,14 +154,6 @@ int main(){
 
 
 
-
-    std::vector<Movie> greatMovies{
-        Movie("The Mummy returns",2022,Movie::MovieType::MovieType_Film,40), // <- begin
-        Movie("Fast and Furious 7",2014,Movie::MovieType::MovieType_Film,99),  // <-items
-        Movie("Star Trek: Voyager",2000,Movie::MovieType::MovieType_Tv,50),
-        Movie("Fast & Furious Presents: Hobbs & Shaw",2019,Movie::MovieType::MovieType_Film,88),
-       Movie("Young Rock",2021,Movie::MovieType::MovieType_Tv,82),
-    };
 
     // Det som skiljer sig i en sort är JÄMFÖRELSEN som säger om en swapp ska ske eller inte
     
