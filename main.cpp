@@ -49,8 +49,76 @@ private:
 };
 
 
+// summeraTalFrom(4)   
+//     return  4 + 6 //summeraTalFrom(3)
+//                      summeraTalFrom(3)
+//                         return 3 +  3 // summeraTalFrom(2)
+//                                      summeraTalFrom(2)
+//                                        return 2 + 1 // summeraTalFrom(1)
+    //                                      summeraTalFrom(1)
+//                                              return 1 + 0 //summeraTalFrom(0)            
+
+int summeraTalFrom(int talet){
+    if(talet == 0){
+        return 0;                
+    }
+    return talet + summeraTalFrom(talet-1);
+}
+
+
+int summeraTalFromFor(int talet){
+    int summa = 0;
+    for(int i = talet; i > 0; i--){
+        summa += i;
+    }
+    return summa;
+}
+
+
+// void skapa(){
+//     int j = 12;
+//     // Ange namn    
+//     // 
+//     huvudMeny();
+// }
+
+// void huvudMeny(){
+//     int i = 0;
+//     // 1. Lista
+//     // 2 . Skapa
+//     // 3. Logga in
+//     // 4 . Exit
+//     while(true){
+//         if(i == 2)
+//             skapa();
+//     }
+// }
+
+
     
-int main(){
+int main(){  
+    huvudMeny();
+
+    // 1 rekursion exempel - Fibonachi
+    // Summera alla tal från START ned till 0
+    int svar = summeraTalFrom(4);   // 4 + 3 + 2 + 1 + 0
+
+    // 2 For loop istället ??? 
+    // alla dagar i veckan - om det inte är enklare med rekursion
+
+    // 3 Farligt exempel!!! Anropa sig själv indirekt! - Menyer
+
+    // 4 Rekursion i DFS
+
+    // 5 Hitta ur en labyrint - kod (sjävkörande bil som stöter på hinder){}
+        // https://www.linkedin.com/in/daniel-s%C3%B6derberg-094ab5258/recent-activity/all/
+
+    // 6 Algoritmer: Lambdas
+
+    // 7 EXTRAUPPGIFT: https://docs.google.com/document/d/1btU93wWrMD5xfOXu-vqqhjdwX_MicFgK/edit?usp=sharing&ouid=108635195046115821096&rtpof=true&sd=true
+
+
+
 
     std::vector<Movie> greatMovies{
         Movie("The Mummy returns",2022,Movie::MovieType::MovieType_Film,40), // <- begin
