@@ -32,7 +32,7 @@ public:
     std::string getName() const{
         return name;
     }
-    int getYear() const{
+    int getYear()     const{
         return year;
     }
     int getPrice() const{
@@ -40,6 +40,9 @@ public:
     }
     MovieType getMovieType() const{
         return type;
+    }
+    void setPrice(int p){
+        price = p;
     }
 private:
     std::string name;
@@ -93,27 +96,48 @@ int summeraTalFromFor(int talet){
 //             skapa();
 //     }
 // }
+// void printName(Movie m){
+//     std::cout << m.getName() << std::endl;
+// }
+
+// void printNameAndPrice(Movie m){
+//     std::cout << m.getName() << m.getPrice() <<  std::endl;
+// }
 
 
-void printAllMovies(std::vector<Movie> movies){
-    for(Movie &m : movies){
-        std::cout << m.getName() << std::endl;
-    }
-}
-
-void printAllMovies2(std::vector<Movie> movies){
-    for(Movie &m : movies){
-        std::cout << m.getName() << m.getPrice() <<  std::endl;
-    }
-}
+// void printAllNewMovies(std::vector<Movie> movies, void (printFunc)(Movie m)){
+//     for(Movie &m : movies){
+//         if(m.getYear() > 2000)
+//         {
+//             printFunc(m);
+//         }
+//     }
+// }
 
 
 
-bool compare(const Movie &m1, const Movie &m2){
+// 1 Innan lambda
+// 2 LAMBDA !!!
+// 3 Egen algoritm och funktionspekare?
+bool comparePrice(const Movie &m1, const Movie &m2){
         return m1.getPrice() < m2.getPrice();
     }
 
+bool compareName(const Movie &m1, const Movie &m2){
+        return m1.getName() < m2.getName();
+    }
+
+bool compareYear(const Movie &m1, const Movie &m2){
+        return m1.getYear() < m2.getYear();
+    }
+
+bool compareYearDesc(const Movie &m1, const Movie &m2){
+        return m1.getYear() > m2.getYear();
+    }
+
+
 int main(){  
+
     std::vector<Movie> greatMovies{
         Movie("The Mummy returns",2022,Movie::MovieType::MovieType_Film,40), // <- begin
         Movie("Fast and Furious 7",2014,Movie::MovieType::MovieType_Film,99),  // <-items
@@ -122,16 +146,34 @@ int main(){
        Movie("Young Rock",2021,Movie::MovieType::MovieType_Tv,82),
     };
 
+    // printAllNewMovies(greatMovies,printName);
+    
+    // printAllNewMovies(greatMovies,printNameAndPrice);
+    int aaa = 0;
+    std::sort(std::begin(greatMovies),std::end(greatMovies),compareName);
+    std::sort(std::begin(greatMovies),std::end(greatMovies),comparePrice);
 
-    std::sort(std::begin(greatMovies),std::end(greatMovies),compare);
+    std::sort(std::begin(greatMovies),std::end(greatMovies),compareYear);
+    std::sort(std::begin(greatMovies),std::end(greatMovies),compareYearDesc);
 
+    // Vad är en funktion ? KODBLOCK { ...  }  med ett namn som man kan kalla på (anropa)
+    // reusable, bidra till bättre läsbarhet
+    // LAMBDA  - FUNKTION utan NAMN (anonymous function)
+    // WHY Poängen? Man slipper SKAPA  funktion, hoppa in i en funktion för att läsa kod
 
-    std::sort(std::begin(greatMovies),std::end(greatMovies),[](const Movie &m1, const Movie &m2){
-        return m1.getPrice() < m2.getPrice();
+    // SORTERING: ska ta en lambda med TVÅ paramterar 
+    // TIPS: hoppa över const i ALLA ERA LAMBDAS
+    // och returnera en BOOL 
+    //   True  om parameter 1 ska ligga framför parameter 2
+    std::sort(std::begin(greatMovies),std::end(greatMovies),[]( Movie &m1,  Movie &m2){
+        if(m1.getPrice() < m2.getPrice()){
+            return true;
+        }
+        return false;
+        //return m1.getPrice() < m2.getPrice();
     });
 
-    printAllMovies(greatMovies);
-    printAllMovies2(greatMovies);
+    //ChristmasWish
 
     
     // 1 rekursion exempel - Fibonachi
@@ -203,9 +245,27 @@ int main(){
     // openssl - hash uis743289jkwfe342dfkslö890
     // färdig källkod cpp
     // openssl.h  -> 20% snabbare   ASM
+
+    // FOR EACH: ska ta en lambda med EN paramterar 
+    // TIPS: hoppa över const i ALLA ERA LAMBDAS
+    // och returnerar INGENTING
+    //   I lambdan  så för vad ni vill
+
     std::for_each( std::begin(greatMovies),std::end(greatMovies),[](const Movie &m){
         std::cout << m.getName() << std::endl;
     } );
+
+
+    // INFLATION! Alla movies ska kosta 10 kr mer
+    std::for_each( std::begin(greatMovies),std::end(greatMovies),[](Movie &m){
+        m.setPrice(m.getPrice()+10);
+    } );
+    
+
+ 
+
+
+
     // vs auto : 
     // BÄTTRE SEMANTIK - for varje - möjligt att breaka
     for(Movie m : greatMovies){
@@ -224,6 +284,11 @@ int main(){
     std::cout << antal << std::endl;
 
     // Förtäckt forloop
+
+    // COUNT: ska ta en lambda med EN paramterar 
+    // TIPS: hoppa över const i ALLA ERA LAMBDAS
+    // och returnera TRUE om den ska räknas med
+
     int nyaAntal = std::count_if(std::begin(greatMovies),std::end(greatMovies), [](const Movie &m){
         return m.getPrice() > 70;  // OM true Räknas den!
     });
@@ -232,7 +297,12 @@ int main(){
     // count_if
     //  std::count_iof( std::begin(greatMovies),std::end(greatMovies),3 )
 
+    // finns det nån som kostar mer   JA NEJ
+    //          92 
 
+    // ANY OF: ska ta en lambda med EN paramterar 
+    // TIPS: hoppa över const i ALLA ERA LAMBDAS
+    // och returnera TRUE om den ska räknas med    
     // Finns det nån film som är gjord innan 2015  YES / NO
     bool anyInnan2015 = std::any_of(std::begin(greatMovies),std::end(greatMovies), [](const Movie &m){
         return m.getYear() < 2015;  // OM true Räknas den!
